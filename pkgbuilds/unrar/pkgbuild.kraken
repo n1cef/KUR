@@ -3,7 +3,7 @@ pkgname=unrar
 pkgver=7.0.9
 
 dependencies=(
-	"!$pkgname"
+	
 	
 )
 sources=(
