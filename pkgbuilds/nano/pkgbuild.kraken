@@ -3,7 +3,7 @@ pkgname=nano
 pkgver=8.1
 
 dependencies=(
-	"!$pkgname"
+	"unrar"
 	
 )
 sources=(

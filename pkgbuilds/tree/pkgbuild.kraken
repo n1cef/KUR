@@ -3,7 +3,7 @@ pkgname=tree
 pkgver=2.1.3
 
 dependencies=(
-	"!$pkgname"
+	"which"
 	
 )
 sources=(

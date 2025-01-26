@@ -3,7 +3,9 @@ pkgname=joe
 pkgver=4.6
 
 dependencies=(
-	"!$pkgname"
+	"nano"
+	"tree"
+	 
 	
 )
 sources=(
