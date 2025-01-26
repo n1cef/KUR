@@ -1,0 +1,67 @@
+
+pkgname=tree
+pkgver=2.1.3
+
+dependencies=(
+	"!$pkgname"
+	
+)
+sources=(
+	"https://gitlab.com/OldManProgrammer/unix-tree/-/archive/2.1.3/unix-tree-2.1.3.tar.bz2"
+)
+
+md5sums=(
+	'9be227932ab457c29f33196544cd1e13'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/unix-${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
+     
+	cd "${SOURCE_DIR}/${pkgname}/unix-${pkgname}-${pkgver}" 
+    return 0
+}
+
+
+
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/unix-${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	metadata_dir="/var/lib/kraken/packages"
+metadata_file="$metadata_dir/${pkgname}-${pkgver}.kraken"
+	cd "${SOURCE_DIR}/${pkgname}/unix-${pkgname}-${pkgver}" &&
+	make PREFIX=/usr MANDIR=/usr/share/man install | tee "$metadata_file"
+    return 0
+}
+
+kraken_preinstall() {
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	echo "nothing to do !"
+    
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

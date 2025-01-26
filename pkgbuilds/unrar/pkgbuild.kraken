@@ -1,0 +1,62 @@
+
+pkgname=unrar
+pkgver=7.0.9
+
+dependencies=(
+	"!$pkgname"
+	
+)
+sources=(
+	"https://www.rarlab.com/rar/unrarsrc-7.0.9.tar.gz"
+)
+
+md5sums=(
+	'a18509f604f31cf7a73473ee97d08ce5'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}src-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}"
+
+	
+
+	
+}
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}" &&
+	make -f makefile
+}
+
+kraken_test() {
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}" &&
+	install -v -m755 unrar /usr/bin 
+    return 0
+}
+
+kraken_preinstall() {
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	echo "nothing to do !"
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
