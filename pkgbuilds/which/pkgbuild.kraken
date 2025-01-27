@@ -38,7 +38,7 @@ kraken_test() {
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	strace -e trace=file -o strace_ouput.log make install
+	     make install
     return 0
 }
 
