@@ -60,6 +60,13 @@ kraken_preremove() {
 	return
 }
 
+kraken_remove(){
+cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ make uninstall
+ return 0
+
+}
+
 kraken_postremove() {
 	return
 }
