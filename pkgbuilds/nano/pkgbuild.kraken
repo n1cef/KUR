@@ -41,7 +41,7 @@ kraken_test() {
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make install
+	sudo make install
     return 0
 }
 
