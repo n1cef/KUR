@@ -71,7 +71,7 @@ kraken_preremove() {
 
 kraken_remove() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-        cd build &&
+      cd build &&
  	make uninstall
 	return 0
 }
