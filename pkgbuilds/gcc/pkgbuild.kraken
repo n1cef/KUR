@@ -6,11 +6,17 @@ dependencies=(
 	
 )
 sources=(
-	"https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz"
+	"https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz",
+    "https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz" ,
+    "https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz" ,
+     "https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz"
 )
 
 md5sums=(
-	'2268420ba02dc01821960e274711bde0'
+	'2268420ba02dc01821960e274711bde0',
+     '523c50c6318dde6f9dc523bc0244690a' ,
+    '956dc04e864001a9c22429f761f2c283',
+    '5c9bc658c9fd0f940e8e3e0f09530c62'
 )
 
 
