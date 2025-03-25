@@ -1,0 +1,73 @@
+
+pkgname=bash
+pkgver=5.2.37
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://ftp.gnu.org/gnu/bash/bash-5.2.37.tar.gz"
+)
+
+md5sums=(
+	'9c28f21ff65de72ca329c1779684a972'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+	./configure --prefix=/usr                      \
+            --build=$(sh support/config.guess) \
+            --host=$KRAKEN_TGT                    \
+            --without-bash-malloc
+}
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	#make check
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make DESTDIR=$KRAKEN install
+    return 0
+}
+
+kraken_preinstall() {
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   ln -sv bash $KRAKEN/bin/sh
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

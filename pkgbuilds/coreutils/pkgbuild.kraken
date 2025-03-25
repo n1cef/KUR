@@ -1,0 +1,77 @@
+
+pkgname=coreutils
+pkgver=9.6
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://ftp.gnu.org/gnu/coreutils/coreutils-9.6.tar.xz"
+)
+
+md5sums=(
+	'0ed6cc983fe02973bc98803155cc1733'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+	./configure --prefix=/usr                     \
+            --host=$KRAKEN_TGT                   \
+            --build=$(build-aux/config.guess) \
+            --enable-install-program=hostname \
+            --enable-no-install-program=kill,uptime
+}
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	#make check
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make DESTDIR=$KRAKEN install
+    return 0
+}
+
+kraken_preinstall() {
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+  mv -v $KRAKEN/usr/bin/chroot              $KRAKEN/usr/sbin
+mkdir -pv $KRAKEN/usr/share/man/man8
+mv -v $KRAKEN/usr/share/man/man1/chroot.1 $KRAKEN/usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/'                    $KRAKEN/usr/share/man/man8/chroot.8
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
