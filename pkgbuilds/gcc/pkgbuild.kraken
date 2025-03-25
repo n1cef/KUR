@@ -45,10 +45,10 @@ mkdir -v build &&
 cd       build  && 
 
 ../configure                  \
-    --target=$LFS_TGT         \
-    --prefix=$LFS/tools       \
+    --target=$KRAKEN_TGT         \
+    --prefix=$KRAKEN/tools       \
     --with-glibc-version=2.41 \
-    --with-sysroot=$LFS       \
+    --with-sysroot=$KRAKEN       \
     --with-newlib             \
     --without-headers         \
     --enable-default-pie      \
