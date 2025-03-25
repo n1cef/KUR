@@ -1,5 +1,5 @@
 
-pkgname=binutils-Pass1
+pkgname=binutils
 pkgver=2.44
 
 dependencies=(
