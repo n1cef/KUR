@@ -1,5 +1,5 @@
 
-pkgname=binutils
+pkgname=binutils-Pass1
 pkgver=2.44
 
 dependencies=(
@@ -24,9 +24,9 @@ kraken_prepare() {
         mkdir -v build &&
          cd  build  &&
 
-../configure --prefix=$LFS/tools \
-             --with-sysroot=$LFS \
-             --target=$LFS_TGT   \
+../configure --prefix=$KRAKEN/tools \
+             --with-sysroot=$KRAKEN \
+             --target=$KRAKEN_TGT   \
              --disable-nls       \
              --enable-gprofng=no \
              --disable-werror    \
