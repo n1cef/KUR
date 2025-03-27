@@ -1,0 +1,75 @@
+
+pkgname=elfutils
+pkgver=0.192
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://sourceware.org/ftp/elfutils/0.192/elfutils-0.192.tar.bz2"
+)
+
+md5sums=(
+	'a6bb1efc147302cfc15b5c2b827f186a'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    ./configure --prefix=/usr                \
+            --disable-debuginfod         \
+            --enable-libdebuginfod=dummy
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	make check  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make -C libelf install
+install -vm644 config/libelf.pc /usr/lib/pkgconfig
+rm /usr/lib/libelf.a
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

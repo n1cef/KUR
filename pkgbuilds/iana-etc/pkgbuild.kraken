@@ -1,0 +1,72 @@
+
+pkgname=iana-etc
+pkgver=
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/Mic92/iana-etc/releases/download/20250123/iana-etc-20250123.tar.gz"
+)
+
+md5sums=(
+	'f8a0ebdc19a5004cf42d8bdcf614fa5d'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    cp services protocols /etc
+    echo "you dont neeed to run the next commands the package installed fine  "
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

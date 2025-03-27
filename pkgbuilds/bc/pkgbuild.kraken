@@ -1,0 +1,71 @@
+
+pkgname=bc
+pkgver=7.0.3
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/gavinhoward/bc/releases/download/7.0.3/bc-7.0.3.tar.xz"
+)
+
+md5sums=(
+	'ad4db5a0eb4fdbb3f6813be4b6b3da74'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    CC=gcc ./configure --prefix=/usr -G -O3 -r
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	make test  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make install
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

@@ -1,0 +1,70 @@
+
+pkgname=markupsafe
+pkgver=3.0.2
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://pypi.org/packages/source/M/MarkupSafe/markupsafe-3.0.2.tar.gz"
+)
+
+md5sums=(
+	'cb0071711b573b155cc8f86e1de72167'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	pip3 install --no-index --find-links dist Markupsafe
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

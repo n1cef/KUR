@@ -1,0 +1,70 @@
+
+pkgname=wheel
+pkgver=0.45.1
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://pypi.org/packages/source/w/wheel/wheel-0.45.1.tar.gz"
+)
+
+md5sums=(
+	'dddc505d0573d03576c7c6c5a4fe0641'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	pip3 install --no-index --find-links dist wheel
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

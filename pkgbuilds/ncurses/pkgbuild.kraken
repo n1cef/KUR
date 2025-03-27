@@ -20,28 +20,17 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    ./configure --prefix=/usr           \
+            --mandir=/usr/share/man \
+            --with-shared           \
+            --without-debug         \
+            --without-normal        \
+            --with-cxx-shared       \
+            --enable-pc-files       \
+            --with-pkg-config-libdir=/usr/lib/pkgconfig
 
-    mkdir build
-pushd build
-  ../configure AWK=gawk
-  make -C include
-  make -C progs tic
-popd
-
-	./configure --prefix=/usr                \
-            --host=$KRAKEN_TGT              \
-            --build=$(./config.guess)    \
-            --mandir=/usr/share/man      \
-            --with-manpage-format=normal \
-            --with-shared                \
-            --without-normal             \
-            --with-cxx-shared            \
-            --without-debug              \
-            --without-ada                \
-            --disable-stripping          \
-            AWK=gawk
+	
 }
-
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	make
@@ -49,27 +38,37 @@ kraken_build() {
 
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	#make check
+	
 	echo "$pkgname does not come with a test suite nothing to do !"  
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make DESTDIR=$KRAKEN TIC_PATH=$(pwd)/build/progs/tic install
-ln -sv libncursesw.so $KRAKEN/usr/lib/libncurses.so
+	make DESTDIR=$PWD/dest install
+install -vm755 dest/usr/lib/libncursesw.so.6.5 /usr/lib
+rm -v  dest/usr/lib/libncursesw.so.6.5
 sed -e 's/^#if.*XOPEN.*$/#if 1/' \
-    -i $KRAKEN/usr/include/curses.h
+    -i dest/usr/include/curses.h
+cp -av dest/* /
+
+for lib in ncurses form panel menu ; do
+    ln -sfv lib${lib}w.so /usr/lib/lib${lib}.so
+    ln -sfv ${lib}w.pc    /usr/lib/pkgconfig/${lib}.pc
+done
     return 0
 }
 
 kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	echo "nothing to do !"
 	return 0
 }
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    ln -sfv libncursesw.so /usr/lib/libcurses.so
+    cp -v -R doc -T /usr/share/doc/ncurses-6.5
    
 	return 0 
 }

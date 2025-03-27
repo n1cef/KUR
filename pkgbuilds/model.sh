@@ -29,7 +29,7 @@ kraken_build() {
 }
 
 kraken_test() {
-	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
 	echo "$pkgname does not come with a test suite nothing to do !"  
     return 0
@@ -37,7 +37,7 @@ kraken_test() {
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make DESTDIR=$KRAKEN install
+	make install
     return 0
 }
 

@@ -1,0 +1,79 @@
+
+pkgname=expect
+pkgver=5.45.4
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz",
+    "https://www.linuxfromscratch.org/patches/lfs/12.3/expect-5.45.4-gcc14-1.patch"
+)
+
+md5sums=(
+	'00fce8de158422f5ccd2666512329bd2',
+    '0b8b5ac411d011263ad40b0664c669f0'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    patch -Np1 -i ../expect-5.45.4-gcc14-1.patch
+    ./configure --prefix=/usr           \
+            --with-tcl=/usr/lib     \
+            --enable-shared         \
+            --disable-rpath         \
+            --mandir=/usr/share/man \
+            --with-tclinclude=/usr/include
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	make test 
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make install
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   ln -svf expect5.45.4/libexpect5.45.4.so /usr/lib
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

@@ -20,8 +20,7 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    ./configure --prefix=/usr \
-            --docdir=/usr/share/doc/bison-3.8.2
+    ./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.8.2
 
 	
 }
@@ -33,7 +32,7 @@ kraken_build() {
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	make check
     return 0
 }
 

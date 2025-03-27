@@ -20,7 +20,9 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    ./configure --disable-shared 
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --docdir=/usr/share/doc/gettext-0.24
 
 	
 }
@@ -32,13 +34,13 @@ kraken_build() {
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	make check  
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	cp -v gettext-tools/src/{msgfmt,msgmerge,xgettext} /usr/bin
+	make install
     return 0
 }
 
@@ -50,7 +52,7 @@ kraken_preinstall() {
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-   
+   chmod -v 0755 /usr/lib/preloadable_libintl.so
 	return 0 
 }
 

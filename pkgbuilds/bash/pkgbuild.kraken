@@ -17,16 +17,16 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    ./configure --prefix=/usr             \
+            --without-bash-malloc     \
+            --with-installed-readline \
+            --docdir=/usr/share/doc/bash-5.2.37
 
-	./configure --prefix=/usr                      \
-            --build=$(sh support/config.guess) \
-            --host=$KRAKEN_TGT                    \
-            --without-bash-malloc
+	
 }
-
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	make
@@ -34,25 +34,35 @@ kraken_build() {
 
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	#make check
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	
+	chown -R tester .
+
+    su -s /usr/bin/expect tester << "EOF"
+set timeout -1
+spawn make tests
+expect eof
+lassign [wait] _ _ _ value
+exit $value
+EOF  
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make DESTDIR=$KRAKEN install
+	make install
     return 0
 }
 
 kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	echo "nothing to do !"
 	return 0
 }
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-   ln -sv bash $KRAKEN/bin/sh
+    exec /usr/bin/bash --login
+   
 	return 0 
 }
 
@@ -62,7 +72,7 @@ kraken_preremove() {
 
 kraken_remove() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
- 
+ 	
 	return 0
 }
 

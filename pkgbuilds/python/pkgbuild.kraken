@@ -7,11 +7,13 @@ dependencies=(
 	
 )
 sources=(
-	"https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tar.xz"
+	"https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tar.xz",
+    "https://www.python.org/ftp/python/doc/3.13.2/python-3.13.2-docs-html.tar.bz2"
 )
 
 md5sums=(
-	'4c2d9202ab4db02c9d0999b14655dfe5'
+	'4c2d9202ab4db02c9d0999b14655dfe5',
+    'd6aede88f480a018d26b3206f21654ae'
 )
 
 
@@ -20,10 +22,10 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-
-    ./configure --prefix=/usr   \
-            --enable-shared \
-            --without-ensurepip
+    ./configure --prefix=/usr        \
+            --enable-shared      \
+            --with-system-expat  \
+            --enable-optimizations
 
 	
 }
@@ -35,13 +37,13 @@ kraken_build() {
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	make test TESTOPTS="--timeout 120" 
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make  install
+	make install
     return 0
 }
 
@@ -53,6 +55,19 @@ kraken_preinstall() {
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    cat > /etc/pip.conf << EOF
+[global]
+root-user-action = ignore
+disable-pip-version-check = true
+EOF
+
+install -v -dm755 /usr/share/doc/python-3.13.2/html
+
+tar --strip-components=1  \
+    --no-same-owner       \
+    --no-same-permissions \
+    -C /usr/share/doc/python-3.13.2/html \
+    -xvf ../python-3.13.2-docs-html.tar.bz2
    
 	return 0 
 }

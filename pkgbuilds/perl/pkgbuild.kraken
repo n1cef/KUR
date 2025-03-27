@@ -20,34 +20,47 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    sh Configure -des                                         \
-             -D prefix=/usr                               \
-             -D vendorprefix=/usr                         \
-             -D useshrplib                                \
-             -D privlib=/usr/lib/perl5/5.40/core_perl     \
-             -D archlib=/usr/lib/perl5/5.40/core_perl     \
-             -D sitelib=/usr/lib/perl5/5.40/site_perl     \
-             -D sitearch=/usr/lib/perl5/5.40/site_perl    \
-             -D vendorlib=/usr/lib/perl5/5.40/vendor_perl \
-             -D vendorarch=/usr/lib/perl5/5.40/vendor_perl
+    export BUILD_ZLIB=False
+export BUILD_BZIP2=0
 
+sh Configure -des                                          \
+             -D prefix=/usr                                \
+             -D vendorprefix=/usr                          \
+             -D privlib=/usr/lib/perl5/5.40/core_perl      \
+             -D archlib=/usr/lib/perl5/5.40/core_perl      \
+             -D sitelib=/usr/lib/perl5/5.40/site_perl      \
+             -D sitearch=/usr/lib/perl5/5.40/site_perl     \
+             -D vendorlib=/usr/lib/perl5/5.40/vendor_perl  \
+             -D vendorarch=/usr/lib/perl5/5.40/vendor_perl \
+             -D man1dir=/usr/share/man/man1                \
+             -D man3dir=/usr/share/man/man3                \
+             -D pager="/usr/bin/less -isR"                 \
+             -D useshrplib                                 \
+             -D usethreads
 	
 }
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    export BUILD_ZLIB=False
+export BUILD_BZIP2=0
 	make
 }
 
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	export BUILD_ZLIB=False
+export BUILD_BZIP2=0  
+TEST_JOBS=$(nproc) make test_harness
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make  install
+    export BUILD_ZLIB=False
+export BUILD_BZIP2=0  
+	make install
+unset BUILD_ZLIB BUILD_BZIP2
     return 0
 }
 

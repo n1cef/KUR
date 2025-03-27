@@ -7,11 +7,13 @@ dependencies=(
 	
 )
 sources=(
-	"https://ftp.gnu.org/gnu/coreutils/coreutils-9.6.tar.xz"
+	"https://ftp.gnu.org/gnu/coreutils/coreutils-9.6.tar.xz",
+    "https://www.linuxfromscratch.org/patches/lfs/12.3/coreutils-9.6-i18n-1.patch"
 )
 
 md5sums=(
-	'0ed6cc983fe02973bc98803155cc1733'
+	'0ed6cc983fe02973bc98803155cc1733',
+    '6aee45dd3e05b7658971c321d92f44b7'
 )
 
 
@@ -20,14 +22,15 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-
-	./configure --prefix=/usr                     \
-            --host=$KRAKEN_TGT                   \
-            --build=$(build-aux/config.guess) \
-            --enable-install-program=hostname \
+    patch -Np1 -i ../coreutils-9.6-i18n-1.patch
+    autoreconf -fv
+automake -af
+FORCE_UNSAFE_CONFIGURE=1 ./configure \
+            --prefix=/usr            \
             --enable-no-install-program=kill,uptime
-}
 
+	
+}
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	make
@@ -35,28 +38,34 @@ kraken_build() {
 
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	#make check
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	
+	make NON_ROOT_USERNAME=tester check-root
+    groupadd -g 102 dummy -U tester
+    chown -R tester . 
+    su tester -c "PATH=$PATH make -k RUN_EXPENSIVE_TESTS=yes check" \
+   < /dev/null
+   groupdel dummy
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make DESTDIR=$KRAKEN install
+	make install
+    mv -v /usr/bin/chroot /usr/sbin
+mv -v /usr/share/man/man1/chroot.1 /usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/' /usr/share/man/man8/chroot.8
     return 0
 }
 
 kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	echo "nothing to do !"
 	return 0
 }
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-  mv -v $KRAKEN/usr/bin/chroot              $KRAKEN/usr/sbin
-mkdir -pv $KRAKEN/usr/share/man/man8
-mv -v $KRAKEN/usr/share/man/man1/chroot.1 $KRAKEN/usr/share/man/man8/chroot.8
-sed -i 's/"1"/"8"/'                    $KRAKEN/usr/share/man/man8/chroot.8
+   
 	return 0 
 }
 

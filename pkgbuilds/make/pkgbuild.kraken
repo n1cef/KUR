@@ -20,10 +20,7 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    ./configure --prefix=/usr   \
-            --without-guile \
-            --host=$KRAKEN_TGT \
-            --build=$(build-aux/config.guess)
+    ./configure --prefix=/usr
 
 	
 }
@@ -33,15 +30,16 @@ kraken_build() {
 }
 
 kraken_test() {
-	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	chown -R tester .
+su tester -c "PATH=$PATH make check"
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make DESTDIR=$KRAKEN install
+	make install
     return 0
 }
 

@@ -7,13 +7,15 @@ dependencies=(
 	
 )
 sources=(
-	"https://ftp.gnu.org/gnu/glibc/glibc-2.41.tar.xz",
-    "https://www.linuxfromscratch.org/patches/lfs/12.3/glibc-2.41-fhs-1.patch"
+	" https://ftp.gnu.org/gnu/glibc/glibc-2.41.tar.xz",
+    "https://www.linuxfromscratch.org/patches/lfs/12.3/glibc-2.41-fhs-1.patch",
+    "https://www.iana.org/time-zones/repository/releases/tzdata2025a.tar.gz"
 )
 
 md5sums=(
 	'19862601af60f73ac69e067d3e9267d4',
-    '9a5997c3452909b1769918c759eff8a2'
+    '9a5997c3452909b1769918c759eff8a2',
+    '404229390c06b7440f5e48d12c1a3251'
 )
 
 
@@ -22,70 +24,112 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    patch -Np1 -i ../glibc-2.41-fhs-1.patch
+    mkdir -v build
+cd       build
 
+echo "rootsbindir=/usr/sbin" > configparms
 
+../configure --prefix=/usr                            \
+             --disable-werror                         \
+             --enable-kernel=5.4                      \
+             --enable-stack-protector=strong          \
+             --disable-nscd                           \
+             libc_cv_slibdir=/usr/lib
 
-    case $(uname -m) in
-    i?86)   ln -sfv ld-linux.so.2 $KRAKEN/lib/ld-lsb.so.3
-    ;;
-    x86_64) ln -sfv ../lib/ld-linux-x86-64.so.2 $KRAKEN/lib64
-            ln -sfv ../lib/ld-linux-x86-64.so.2 $KRAKEN/lib64/ld-lsb-x86-64.so.3
-    ;;
-esac
-
-patch -Np1 -i ../glibc-2.41-fhs-1.patch &&
-
-mkdir -v build &&
-cd       build && 
-echo "rootsbindir=/usr/sbin" > configparms &&
-
-
-	../configure                             \
-      --prefix=/usr                      \
-      --host=$KRAKEN_TGT                    \
-      --build=$(../scripts/config.guess) \
-      --enable-kernel=5.4                \
-      --with-headers=$KRAKEN/usr/include    \
-      --disable-nscd                     \
-      libc_cv_slibdir=/usr/lib
+	
 }
-
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    cd build &&
-
+    cd       build && 
 	make
 }
 
 kraken_test() {
 	#cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	#make check
-	echo "$pkgname does not come with a test suite nothing to do !"  
+    cd       build &&
+	
+	make check
     return 0
 }
 
 kraken_install() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    cd build &&
-	make DESTDIR=$KRAKEN install
+    cd build 
+	make install
+    sed '/RTLDLIST=/s@/usr@@g' -i /usr/bin/ldd
+    
+    make localedata/install-locales  
+
+
+    localedef -i C -f UTF-8 C.UTF-8
+     localedef -i ja_JP -f SHIFT_JIS ja_JP.SJIS 2> /dev/null || true
+
     return 0
 }
 
 kraken_preinstall() {
-	echo "If KRAKEN is not properly set, and despite the recommendations, 
-    you are building as root,
-     the next command will install the newly built Glibc to your host system, 
-     which will almost certainly render it unusable.
-     So double-check that the environment is correctly set,
-      and that you are not root, before running the install  command."
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    cd build &&
+	touch /etc/ld.so.conf
+    sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
 
 	return 0
 }
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-    cd build &&
-    sed '/RTLDLIST=/s@/usr@@g' -i $KRAKEN/usr/bin/ldd
+    cd build 
+    cat > /etc/nsswitch.conf << "EOF"
+# Begin /etc/nsswitch.conf
+
+passwd: files
+group: files
+shadow: files
+
+hosts: files dns
+networks: files
+
+protocols: files
+services: files
+ethers: files
+rpc: files
+
+# End /etc/nsswitch.conf
+EOF
+
+tar -xf ../../tzdata2025a.tar.gz
+
+ZONEINFO=/usr/share/zoneinfo
+mkdir -pv $ZONEINFO/{posix,right}
+
+for tz in etcetera southamerica northamerica europe africa antarctica  \
+          asia australasia backward; do
+    zic -L /dev/null   -d $ZONEINFO       ${tz}
+    zic -L /dev/null   -d $ZONEINFO/posix ${tz}
+    zic -L leapseconds -d $ZONEINFO/right ${tz}
+done
+
+cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
+zic -d $ZONEINFO -p America/New_York
+unset ZONEINFO tz
+
+ln -sfv /usr/share/zoneinfo/Africa/Tunis /etc/localtime
+
+cat > /etc/ld.so.conf << "EOF"
+# Begin /etc/ld.so.conf
+/usr/local/lib
+/opt/lib
+
+EOF
+
+cat >> /etc/ld.so.conf << "EOF"
+# Add an include directory
+include /etc/ld.so.conf.d/*.conf
+
+EOF
+mkdir -pv /etc/ld.so.conf.d
+   
 	return 0 
 }
 
@@ -95,7 +139,7 @@ kraken_preremove() {
 
 kraken_remove() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
- 	make uninstall
+ 	
 	return 0
 }
 
