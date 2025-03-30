@@ -18,7 +18,7 @@ md5sums=(
 kraken_prepare() {
 	
     sudo mv "${SOURCE_DIR}/vscode/code-stable-x64-${pkgver}.tar.gz" ""${SOURCE_DIR}/vscode/vscode-${pkgver}.tar.gz""
-	tar -xvf "${SOURCE_DIR}/vscode/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/vdcode" &&
+	tar -xvf "${SOURCE_DIR}/vscode/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/vscode" &&
 
 	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
     chown root:root chrome-sandbox
