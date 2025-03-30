@@ -1,4 +1,3 @@
-
 pkgname=code-stable-x64
 pkgver=1741787903
 
@@ -18,11 +17,10 @@ md5sums=(
 kraken_prepare() {
 	
     
-	tar -xvf "${SOURCE_DIR}/vscode/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/vscode" &&
+	tar -xvf "${SOURCE_DIR}/vscode/code-stable-x64-1741787903.tar.gz" -C "${SOURCE_DIR}/vscode" &&
 
-	 cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
-    sudo chown root:root chrome-sandbox
-    sudo chmod 4755 chrome-sandbox
+	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
+    
 
      cat > code.desktop << 'EOF'
     [Desktop Entry]
@@ -42,11 +40,16 @@ EOF
     sleep 2
 
 
-sudo cp -r "${SOURCE_DIR}/vscode/VSCode-linux-x64/" /usr/share/
+   sudo cp -r "${SOURCE_DIR}/vscode/VSCode-linux-x64/" /usr/share/
+ sleep 2 
+     sudo chown root:root /usr/share/VSCode-linux-x64/chrome-sandbox
+    sudo chmod 4755 /usr/share/VSCode-linux-x64/chrome-sandbox
     sudo  rm -Rf /usr/bin/code 
     sudo rm -Rf /usr/local/bin/code
 
-    sudo ln -sf /usr/share/VSCode-linux-x64/bin/code /usr/local/bin/code 
+    sudo ln -sf /usr/share/VSCode-linux-x64/bin/code /usr/local/bin/code
+
+    echo "you dont need to run build|test|preisntall|install|postinstall the package was installed and you can run it directly form terminal with code  or you can find her in the list of application " 
 
     
 
