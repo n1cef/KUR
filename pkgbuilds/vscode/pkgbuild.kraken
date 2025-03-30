@@ -17,39 +17,39 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/vscode/code-stable-x64-1741787903.tar.gz" -C "${SOURCE_DIR}/vdcode" &&
 
-	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
     chown root:root chrome-sandbox
     chmod 4755 chrome-sandbox
 
 	
 }
 kraken_build() {
-	
+	echo "$pkgname does not come with a test suite nothing to do !" 
 	
 }
 
 kraken_test() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
 	
 	echo "$pkgname does not come with a test suite nothing to do !"  
     return 0
 }
 
 kraken_install() {
-	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
     cd bin &&
     sudo cp code /usr/local/bin
 
     sudo chmod +x /usr/local/bin/code 
-    
+
     ln -sf /usr/local/bin /usr/bin/code
     return 0
 }
 
 kraken_preinstall() {
-	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
     
     cat > code.desktop << 'EOF'
     [Desktop Entry]
@@ -72,8 +72,8 @@ EOF
 }
 
 kraken_postinstall() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-   
+	
+  
 	return 0 
 }
 
@@ -82,7 +82,10 @@ kraken_preremove() {
 }
 
 kraken_remove() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	rm -Rf /usr/bin/code 
+    rm -Rf /usr/share/applications/code.desktop
+    rm -Rf /usr/share/icons/hicolor/48x48/apps/code.png
+    sudo gtk-update-icon-cache /usr/share/icons/hicolor/
  	
 	return 0
 }
