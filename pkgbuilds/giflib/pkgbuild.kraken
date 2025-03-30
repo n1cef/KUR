@@ -1,0 +1,87 @@
+
+pkgname=giflib
+pkgver=5.2.2
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://sourceforge.net/projects/giflib/files/giflib-5.2.2.tar.gz",
+    "https://www.linuxfromscratch.org/patches/blfs/12.2/giflib-5.2.2-upstream_fixes-1.patch"
+)
+
+md5sums=(
+	'913dd251492134e235ee3c9a91987a4d',
+    '8cb2343ea14320fc2ed055b7214c2ec5'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    patch -Np1 -i ../giflib-5.2.2-upstream_fixes-1.patch
+
+    cp pic/gifgrid.gif doc/giflib-logo.gif
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+
+    make PREFIX=/usr install &&
+
+rm -fv /usr/lib/libgif.a &&
+
+find doc \( -name Makefile\* -o -name \*.1 \
+         -o -name \*.xml \) -exec rm -v {} \; &&
+
+install -v -dm755 /usr/share/doc/giflib-5.2.2 &&
+cp -v -R doc/* /usr/share/doc/giflib-5.2.2
+
+
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
