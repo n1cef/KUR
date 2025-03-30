@@ -1,0 +1,94 @@
+
+pkgname=code-stable-x64
+pkgver=-1741787903
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://vscode.download.prss.microsoft.com/dbazure/download/stable/ddc367ed5c8936efe395cffeec279b04ffd7db78/code-stable-x64-1741787903.tar.gz"
+)
+
+md5sums=(
+	'2a016410b3a77bffa2c946ec78dd5b79'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+    chown root:root chrome-sandbox
+    chmod 4755 chrome-sandbox
+
+	
+}
+kraken_build() {
+	
+	
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+    cd bin &&
+    sudo cp code /usr/local/bin
+
+    sudo chmod +x /usr/local/bin/code 
+    
+    ln -sf /usr/local/bin /usr/bin/code
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/VSCode-linux-x64" &&
+    
+    cat > code.desktop << 'EOF'
+    [Desktop Entry]
+    Version=1741787903 
+    Name=VS code 
+    Comment=Start the Vs code  application
+    Exec=/usr/bin/code 
+    Icon=code
+    Terminal=false
+    Type=Application
+    Categories=Utility;
+EOF
+
+    sudo cp code.desktop /usr/share/applications/
+    sudo cp resources/app/resources/linux/code.png /usr/share/icons/hicolor/48x48/apps/
+    sudo gtk-update-icon-cache /usr/share/icons/hicolor/
+    sleep 3
+
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
