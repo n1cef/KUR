@@ -17,12 +17,37 @@ md5sums=(
 
 kraken_prepare() {
 	
-    sudo mv "${SOURCE_DIR}/vscode/code-stable-x64-${pkgver}.tar.gz" ""${SOURCE_DIR}/vscode/vscode-${pkgver}.tar.gz""
+    
 	tar -xvf "${SOURCE_DIR}/vscode/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/vscode" &&
 
-	sudo cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
+	 cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
     sudo chown root:root chrome-sandbox
     sudo chmod 4755 chrome-sandbox
+
+     cat > code.desktop << 'EOF'
+    [Desktop Entry]
+    Version=1741787903 
+    Name=VS code 
+    Comment=Start the Vs code  application
+    Exec=/usr/local/bin/code 
+    Icon=code
+    Terminal=false
+    Type=Application
+    Categories=Utility;
+EOF
+
+    sudo cp code.desktop /usr/share/applications/
+    sudo cp resources/app/resources/linux/code.png /usr/share/icons/hicolor/48x48/apps/
+    sudo gtk-update-icon-cache /usr/share/icons/hicolor/
+    sleep 2
+
+
+sudo cp -r "${SOURCE_DIR}/vscode/VSCode-linux-x64/" /usr/share/
+    sudo  rm -Rf /usr/bin/code 
+    sudo rm -Rf /usr/local/bin/code
+
+    sudo ln -sf /usr/share/VSCode-linux-x64/bin/code /usr/local/bin/code 
+
     
 
 	
@@ -41,35 +66,15 @@ kraken_test() {
 
 kraken_install() {
 	cd "${SOURCE_DIR}/vscode/
-    sudo cp -r VSCode-linux-x64/ /usr/share/
-    sudo  rm -Rf /usr/bin/code 
-    sudo rm -Rf /usr/local/bin/code
-
-    sudo ln -sf /usr/share/VSCode-linux-x64/bin/code /usr/local/bin/code 
+    
 
     
     return 0
 }
 
 kraken_preinstall() {
-	cd "${SOURCE_DIR}/vscode/VSCode-linux-x64" &&
-    
-    cat > code.desktop << 'EOF'
-    [Desktop Entry]
-    Version=1741787903 
-    Name=VS code 
-    Comment=Start the Vs code  application
-    Exec=/usr/local/bin/code 
-    Icon=code
-    Terminal=false
-    Type=Application
-    Categories=Utility;
-EOF
-
-    sudo cp code.desktop /usr/share/applications/
-    sudo cp resources/app/resources/linux/code.png /usr/share/icons/hicolor/48x48/apps/
-    sudo gtk-update-icon-cache /usr/share/icons/hicolor/
-    sleep 3
+	
+   
 
 	return 0
 }
