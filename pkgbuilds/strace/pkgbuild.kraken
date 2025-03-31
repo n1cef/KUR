@@ -33,7 +33,7 @@ kraken_test() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
 	echo "$pkgname does not come with a test suite nothing to do !"      
-
+echo "the test will tike about 4 SBU if you want you can skeep him by CTR + C "
 make check 
     return 0
 }
