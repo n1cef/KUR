@@ -1,6 +1,6 @@
 
-pkgname=
-pkgver=
+pkgname=strace
+pkgver=6.8
 
 dependencies=(
 	
