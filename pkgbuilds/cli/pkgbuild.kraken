@@ -1,0 +1,69 @@
+
+pkgname=cli
+pkgver=2.69.0
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/cli/cli/archive/refs/tags/v2.69.0.tar.gz"
+)
+
+md5sums=(
+	'b755aac8779973ec788ec24920c4e17d'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/v${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+	 go version 
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cp bin/gh /usr/local/bin/gh
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+ 	
+	return 0
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
