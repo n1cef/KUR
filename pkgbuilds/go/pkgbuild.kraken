@@ -27,8 +27,9 @@ kraken_prepare() {
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}" &&
 	cd src &&
-
-	 export GOROOT_BOOTSTRAP=/sources/go/go
+     
+	 
+	 export GOROOT_BOOTSTRAP=/usr/local/go
      ./make.bash
 }
 
