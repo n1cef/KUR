@@ -1,17 +1,17 @@
 
-pkgname=
-pkgver=
+pkgname=java
+pkgver=22.0.2
 
 dependencies=(
 	
 	
 )
 sources=(
-	""
+	"https://anduin.linuxfromscratch.org/BLFS/OpenJDK/OpenJDK-22.0.2/OpenJDK-22.0.2+9-x86_64-bin.tar.xz"
 )
 
 md5sums=(
-	''
+	'83f5b325922b3cef357a6e63d368ce91'
 )
 
 
@@ -58,9 +58,9 @@ kraken_preremove() {
 }
 
 kraken_remove() {
-	
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
  	
-	return 
+	return 0
 }
 
 kraken_postremove() {

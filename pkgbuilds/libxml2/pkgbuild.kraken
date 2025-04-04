@@ -1,17 +1,19 @@
 
-pkgname=
-pkgver=
+pkgname=libxml2
+pkgver=2.13.3
 
 dependencies=(
-	
+	'icu'
 	
 )
 sources=(
-	""
+	"https://download.gnome.org/sources/libxml2/2.13/libxml2-2.13.3.tar.xz",
+    "https://www.linuxfromscratch.org/patches/blfs/12.2/libxml2-2.13.3-upstream_fix-2.patch"
 )
 
 md5sums=(
-	''
+	'aeb92dc58cea91c95a10751327193a11',
+    '689c93d134856b3053e658ee7d235b17'
 )
 
 
@@ -20,6 +22,19 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+
+    patch -Np1 -i ../libxml2-2.13.3-upstream_fix-2.patch
+
+    ./configure --prefix=/usr           \
+            --sysconfdir=/etc       \
+            --disable-static        \
+            --with-history          \
+            --with-icu              \
+            PYTHON=/usr/bin/python3 \
+            --docdir=/usr/share/doc/libxml2-2.13.3
+
+
 
 	
 }
@@ -49,6 +64,9 @@ kraken_preinstall() {
 
 kraken_postinstall() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+    rm -vf /usr/lib/libxml2.la &&
+sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config
    
 	return 0 
 }

@@ -1,0 +1,135 @@
+
+pkgname=php
+pkgver=8.3.10
+
+dependencies=(
+	'apache',
+    'libxml2'
+	
+)
+sources=(
+	"https://www.php.net/distributions/php-8.3.10.tar.xz",
+    "https://www.php.net/distributions/manual/php_manual_en.html.gz"
+)
+
+md5sums=(
+	'49f47bb78d521ad284ab8f15e91e6c76',
+    '03379758105814987f1a34be354663fe'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+    ./configure --prefix=/usr                \
+            --sysconfdir=/etc            \
+            --localstatedir=/var         \
+            --datadir=/usr/share/php     \
+            --mandir=/usr/share/man      \
+            --without-pear               \
+            --enable-fpm                 \
+            --with-fpm-user=apache       \
+            --with-fpm-group=apache      \
+            --with-config-file-path=/etc \
+            --with-zlib                  \
+            --enable-bcmath              \
+            --with-bz2                   \
+            --enable-calendar            \
+            --enable-dba=shared          \
+            --with-gdbm                  \
+            --with-gmp                   \
+            --enable-ftp                 \
+            --with-gettext               \
+            --enable-mbstring            \
+            --disable-mbregex            \
+            --with-readline         
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	make test  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make install                                     &&
+install -v -m644 php.ini-production /etc/php.ini &&
+
+install -v -m755 -d /usr/share/doc/php-8.3.10 &&
+install -v -m644    CODING_STANDARDS* EXTENSIONS NEWS README* UPGRADING* \
+                    /usr/share/doc/php-8.3.10
+
+                    if [ -f /etc/php-fpm.conf.default ]; then
+  mv -v /etc/php-fpm.conf{.default,} &&
+  mv -v /etc/php-fpm.d/www.conf{.default,}
+fi
+
+
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+    install -v -m644 ../php_manual_en.html.gz \
+    /usr/share/doc/php-8.3.10 &&
+gunzip -v /usr/share/doc/php-8.3.10/php_manual_en.html.gz
+
+
+wget https://pear.php.net/go-pear.phar
+php ./go-pear.phar
+
+
+sed -i 's@php/includes"@&\ninclude_path = ".:/usr/lib/php"@' \
+    /etc/php.ini
+
+
+    sed -i -e '/proxy_module/s/^#//'      \
+       -e '/proxy_fcgi_module/s/^#//' \
+       /etc/httpd/httpd.conf
+
+
+       echo \
+'ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/srv/www/$1' >> \
+/etc/httpd/httpd.conf
+
+
+cd /sources/krakenboot/krakenboot-1.1.0/
+
+   make install-php
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

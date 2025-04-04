@@ -1,25 +1,31 @@
 
-pkgname=
-pkgver=
+pkgname=apr-util
+pkgver=1.6.3
 
 dependencies=(
-	
+	'apr'
 	
 )
 sources=(
-	""
+	"https://archive.apache.org/dist/apr/apr-util-1.6.3.tar.bz2"
 )
 
 md5sums=(
-	''
+	'b6e8c9b31d938fe5797ceb0d1ff2eb69'
 )
 
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+    ./configure --prefix=/usr       \
+            --with-apr=/usr     \
+            --with-gdbm=/usr    \
+            --with-openssl=/usr \
+            --with-crypto
 
 	
 }
@@ -31,7 +37,7 @@ kraken_build() {
 kraken_test() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	make -j1 test  
     return 0
 }
 

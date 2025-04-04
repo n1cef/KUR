@@ -1,25 +1,28 @@
 
-pkgname=
-pkgver=
+pkgname=apr
+pkgver=1.7.4
 
 dependencies=(
 	
 	
 )
 sources=(
-	""
+	"https://archive.apache.org/dist/apr/apr-1.7.4.tar.bz2"
 )
 
 md5sums=(
-	''
+	'f8a62f3984898ba0ea8b6f26b851cb99'
 )
 
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --with-installbuilddir=/usr/share/apr-1/build
 
 	
 }
@@ -31,7 +34,7 @@ kraken_build() {
 kraken_test() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
 	
-	echo "$pkgname does not come with a test suite nothing to do !"  
+	make test   
     return 0
 }
 
