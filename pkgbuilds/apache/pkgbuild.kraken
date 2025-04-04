@@ -20,9 +20,9 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/httpd-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
 
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/httpd-${pkgver}" &&
 
     groupadd -g 25 apache &&
 useradd -c "Apache Server" -d /srv/www -g apache \
@@ -57,20 +57,20 @@ sed -e '/encoding.h/a # include <libxml/xmlstring.h>' \
 	
 }
 kraken_build() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/httpd-${pkgver}" &&
     echo "can take some time "
 	make
 }
 
 kraken_test() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/httpd-${pkgver}" &&
 	
 	echo "$pkgname does not come with a test suite nothing to do !"  
     return 0
 }
 
 kraken_install() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	cd "${SOURCE_DIR}/${pkgname}/httpd-${pkgver}" &&
 	
 
     make install  &&
