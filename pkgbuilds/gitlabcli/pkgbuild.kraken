@@ -37,8 +37,10 @@ kraken_test() {
 }
 
 kraken_install() {
-    cd "${SOURCE_DIR}/${pkgname}/cli-v1.35.0" &&
-	sudo cp bin/glab /usr/local/bin/
+    cd "${SOURCE_DIR}/${pkgname}/cli-v1.35.0/bin/glab" "/usr/local/bin/" &&
+	echo "you can check glab version by glab --version "
+
+	
     return 0
 }
 
