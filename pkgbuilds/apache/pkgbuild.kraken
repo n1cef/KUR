@@ -58,6 +58,7 @@ sed -e '/encoding.h/a # include <libxml/xmlstring.h>' \
 }
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    echo "can take some time "
 	make
 }
 
