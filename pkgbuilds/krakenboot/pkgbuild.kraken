@@ -17,13 +17,7 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
-     
-     
-	 
-	 mv "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416"  "${SOURCE_DIR}/${pkgname}/krakenboot-1.1.0"
-      
-	  rm -Rf "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416.tar.xz"
+	tar -xvf "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416.tar.xz" -C "${SOURCE_DIR}/${pkgname}" && mv "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416"  "${SOURCE_DIR}/${pkgname}/krakenboot-1.1.0" &&  rm -Rf "${SOURCE_DIR}/${pkgname}/blfs-bootscripts-20240416.tar.xz"
 
 	
 
