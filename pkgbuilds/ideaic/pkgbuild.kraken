@@ -17,7 +17,7 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/ideaIC-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
     mkdir -pv /usr/ideaIC
 	cp -r  "${SOURCE_DIR}/${pkgname}/idea-IC-243.26053.27" "/usr/ideaIC"
     
