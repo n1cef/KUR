@@ -1,0 +1,197 @@
+
+pkgname=mariadb
+pkgver=10.11.8
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://downloads.mariadb.org/interstitial/mariadb-10.11.8/source/mariadb-10.11.8.tar.gz"
+)
+
+md5sums=(
+	'ba7abfae7947893c5a5343180808b0cb'
+)
+
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+
+    groupadd -g 40 mysql &&
+useradd -c "MySQL Server" -d /srv/mysql -g mysql -s /bin/false -u 40 mysql
+
+mkdir build &&
+cd    build &&
+
+cmake -D CMAKE_BUILD_TYPE=Release                       \
+      -D CMAKE_INSTALL_PREFIX=/usr                      \
+      -D GRN_LOG_PATH=/var/log/groonga.log              \
+      -D INSTALL_DOCDIR=share/doc/mariadb-10.11.8       \
+      -D INSTALL_DOCREADMEDIR=share/doc/mariadb-10.11.8 \
+      -D INSTALL_MANDIR=share/man                       \
+      -D INSTALL_MYSQLSHAREDIR=share/mysql              \
+      -D INSTALL_MYSQLTESTDIR=share/mysql/test          \
+      -D INSTALL_PAMDIR=lib/security                    \
+      -D INSTALL_PAMDATADIR=/etc/security               \
+      -D INSTALL_PLUGINDIR=lib/mysql/plugin             \
+      -D INSTALL_SBINDIR=sbin                           \
+      -D INSTALL_SCRIPTDIR=bin                          \
+      -D INSTALL_SQLBENCHDIR=share/mysql/bench          \
+      -D INSTALL_SUPPORTFILESDIR=share/mysql            \
+      -D MYSQL_DATADIR=/srv/mysql                       \
+      -D MYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock        \
+      -D WITH_EXTRA_CHARSETS=complex                    \
+      -D WITH_EMBEDDED_SERVER=ON                        \
+      -D SKIP_TESTS=ON                                  \
+      -D TOKUDB_OK=0                                    \
+      .. 
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    cd build &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	cd build && make test
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    cd build 
+	make install
+
+    mv -v /usr/share/pam_use_map.so /lib/security &&
+mv -v /usr/share/user_map.conf /etc/security
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+    cd build 
+
+
+    install -v -dm 755 /etc/mysql &&
+cat > /etc/mysql/my.cnf << "EOF"
+# Begin /etc/mysql/my.cnf
+
+# The following options will be passed to all MySQL clients
+[client]
+#password       = your_password
+port            = 3306
+socket          = /run/mysqld/mysqld.sock
+
+# The MySQL server
+[mysqld]
+port            = 3306
+socket          = /run/mysqld/mysqld.sock
+datadir         = /srv/mysql
+skip-external-locking
+key_buffer_size = 16M
+max_allowed_packet = 1M
+sort_buffer_size = 512K
+net_buffer_length = 16K
+myisam_sort_buffer_size = 8M
+
+# Don't listen on a TCP/IP port at all.
+skip-networking
+
+# required unique id between 1 and 2^32 - 1
+server-id       = 1
+
+# Uncomment the following if you are using BDB tables
+#bdb_cache_size = 4M
+#bdb_max_lock = 10000
+
+# InnoDB tables are now used by default
+innodb_data_home_dir = /srv/mysql
+innodb_log_group_home_dir = /srv/mysql
+# All the innodb_xxx values below are the default ones:
+innodb_data_file_path = ibdata1:12M:autoextend
+# You can set .._buffer_pool_size up to 50 - 80 %
+# of RAM but beware of setting memory usage too high
+innodb_buffer_pool_size = 128M
+innodb_log_file_size = 48M
+innodb_log_buffer_size = 16M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[isamchk]
+key_buffer = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout
+
+# End /etc/mysql/my.cnf
+EOF
+
+
+mysql_install_db --basedir=/usr --datadir=/srv/mysql --user=mysql &&
+chown -R mysql:mysql /srv/mysql
+
+install -v -m755 -o mysql -g mysql -d /run/mysqld &&
+mysqld_safe --user=mysql 2>&1 >/dev/null &&
+
+mysqladmin -u root kraken
+
+mysqladmin -p shutdown
+
+
+cd /sources/krakenboot/krakenboot-1.1.0/
+make install-mysql
+
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

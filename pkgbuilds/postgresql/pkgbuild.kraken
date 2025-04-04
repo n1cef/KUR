@@ -71,7 +71,7 @@ su - postgres -c '/usr/bin/initdb -D /srv/pgsql/data'
 
 
 
-cd /sources/krakenboot/kraenboot-1.1.0 
+cd /sources/krakenboot/krakenboot-1.1.0 
 make install-postgresql
 
    
