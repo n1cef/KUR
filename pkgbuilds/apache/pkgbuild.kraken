@@ -13,7 +13,8 @@ sources=(
 )
 
 md5sums=(
-	'cded7afa23c13c4854008d95a69ce016'
+	'cded7afa23c13c4854008d95a69ce016',
+    '88bb01e0f66e3021264f5996d91a224f'
 )
 
 
