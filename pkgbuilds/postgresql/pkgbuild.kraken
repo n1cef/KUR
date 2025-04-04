@@ -1,0 +1,95 @@
+
+pkgname=postgresql
+pkgver=16.4
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://ftp.postgresql.org/pub/source/v16.4/postgresql-16.4.tar.bz2"
+)
+
+md5sums=(
+	'bdcc1e350b473c13d132d190c0c18499'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.bz2" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+
+    groupadd -g 41 postgres &&
+useradd -c "PostgreSQL Server" -g postgres -d /srv/pgsql/data \
+        -u 41 postgres
+
+        sed -i '/DEFAULT_PGSOCKET_DIR/s@/tmp@/run/postgresql@' src/include/pg_config_manual.h &&
+
+./configure --prefix=/usr          \
+            --enable-thread-safety \
+            --docdir=/usr/share/doc/postgresql-16.4 
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make install      &&
+make install-docs
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+
+
+    install -v -dm700 /srv/pgsql/data &&
+install -v -dm755 /run/postgresql &&
+chown -Rv postgres:postgres /srv/pgsql /run/postgresql
+
+su - postgres -c '/usr/bin/initdb -D /srv/pgsql/data'
+
+
+
+cd /sources/krakenboot/kraenboot-1.1.0 
+make install-postgresql
+
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
