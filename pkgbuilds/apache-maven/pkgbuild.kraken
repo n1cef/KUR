@@ -20,9 +20,12 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}-bin.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 
-    mkdir  -pv /usr/maven
+     mkdir  -pv /usr/maven
 
-	cp -r "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}/*" /usr/maven
+    cp -r "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}/" /usr/
+    echo "no woman no cry "
+   rm -Rf /usr/maven
+    mv "/usr/${pkgname}-${pkgver}"  /usr/maven
 
     ln -sf /usr/maven/bin/mvn /usr/local/bin/mvn
     ln -sf /usr/maven/bin/mvnDebug /usr/local/bin/mvnDebug
