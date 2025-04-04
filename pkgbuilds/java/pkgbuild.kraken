@@ -123,6 +123,9 @@ mandb -c /opt/jdk/man
 
 ln -sfv /etc/pki/tls/java/cacerts /opt/jdk/lib/security/cacerts
 
+source /etc/profile  
+source /etc/profile
+#fuck java and etc/profile
 /opt/jdk/bin/keytool -list -cacerts
    
 	return 0 

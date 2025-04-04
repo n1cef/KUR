@@ -8,7 +8,8 @@ dependencies=(
     'zip',
     'unzip',
     'wget',
-    'giflib'
+    'giflib',
+    'libXt'
 	
 )
 sources=(
@@ -27,10 +28,15 @@ kraken_prepare() {
 	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}-ga.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
 
 	cd "${SOURCE_DIR}/${pkgname}/jdk22u-${pkgname}-${pkgver}-ga" &&
+        
 
+         export PATH="/opt/jdk/bin/:$PATH"
 	tar -xf ../jtreg-7.3.1+1.tar.gz
 
     unset JAVA_HOME                             &&
+
+     export PATH="/opt/jdk/bin/:$PATH"
+     
 bash configure --enable-unlimited-crypto    \
                --disable-warnings-as-errors \
                --with-stdc++lib=dynamic     \
