@@ -25,7 +25,8 @@ kraken_prepare() {
 }
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/cli-v1.35.0" &&
-	make build
+	export PATH="/usr/go/bin:$PATH"
+	go build -trimpath -ldflags "-X main.buildDate=$(date +%Y-%m-%d) -X main.version=1.35.0" -o ./bin/glab gitlab.com/gitlab-org/cli/cmd/glab
 }
 
 kraken_test() {
