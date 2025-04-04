@@ -51,8 +51,8 @@ kraken_preinstall() {
 }
 
 kraken_postinstall() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-   
+	cd "${SOURCE_DIR}/${pkgname}/cli-v1.35.0" &&
+	cp bin/glab /usr/bin/
 	return 0 
 }
 
