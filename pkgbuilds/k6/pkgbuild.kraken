@@ -1,0 +1,74 @@
+
+pkgname=k6
+pkgver=v1.0.0-rc1-linux-amd64
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/grafana/k6/releases/download/v1.0.0-rc1/k6-v1.0.0-rc1-linux-amd64.tar.gz"
+)
+
+md5sums=(
+	'07df80aaf30e02b87d6210087e28ae30'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" 
+
+	 cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+      chmod +x k6
+      cp k6 /usr/local/bin
+    
+
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "finish"
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
