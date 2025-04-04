@@ -1,0 +1,79 @@
+
+pkgname=apache-maven
+pkgver=3.9.6
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz"
+)
+
+md5sums=(
+	'fb90d9f8aa9ac18e8aa0a0842a09239f'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}-bin.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+
+    mkdir  -pv /usr/maven
+
+	cp -r "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}/*" /usr/maven
+
+    ln -sf /usr/maven/bin/mvn /usr/local/bin/mvn
+    ln -sf /usr/maven/bin/mvnDebug /usr/local/bin/mvnDebug
+    ln -sf /usr/maven/bin/mvnyjp /usr/local/bin/mvnyjp
+
+    echo "maven installation compete you can test maven with mvn --version "
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	make install
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
