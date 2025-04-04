@@ -1,6 +1,6 @@
 
-pkgname=idealIC
-pkgver=2024.2.5
+pkgname=ideaIC
+pkgver=2024.3.5
 
 dependencies=(
 	
@@ -11,21 +11,44 @@ sources=(
 )
 
 md5sums=(
-	''
+	'10c9c34219e69892dd7f818ebfe710f9'
 )
 
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.xz" -C "${SOURCE_DIR}/${pkgname}" &&
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+    mkdir -pv /usr/ideaIC
+	cp -r  "${SOURCE_DIR}/${pkgname}/idea-IC-243.26053.27" "/usr/ideaIC"
+    
+     cd /usr/ideaIC/idea-IC-243.26053.27 
+       cat > ideaIC.desktop << 'EOF'
+    [Desktop Entry]
+    Version=1741787903 
+    Name=idealIC
+    Comment=Start the ideaIC  application
+    Exec=/usr/local/bin/idea 
+    Icon=idea
+    Terminal=false
+    Type=Application
+    Categories=Utility;
+EOF
 
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+    sudo cp ideaIC.desktop /usr/share/applications/
+    sudo cp bin/idea.png /usr/share/icons/hicolor/48x48/apps/
+    sudo gtk-update-icon-cache /usr/share/icons/hicolor/
+    sleep 2
 
-	
+sudo  rm -Rf /usr/bin/idea
+    sudo rm -Rf /usr/local/bin/idea
+
+    sudo ln -sf /usr/ideaIC/idea-IC-243.26053.27/bin/idea /usr/local/bin/idea
+
+	echo "idea is installed you dont need to continue you can run idea from terminal or just search for idea in the kde application "
 }
 kraken_build() {
 	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	make
+	
 }
 
 kraken_test() {
