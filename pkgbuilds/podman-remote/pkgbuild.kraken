@@ -1,4 +1,3 @@
-
 pkgname=podman-remote
 pkgver=static-linux_amd64
 
@@ -17,17 +16,17 @@ md5sums=(
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
-
-	cp "${SOURCE_DIR}/${pkgname}/bin/${pkgname}-${pkgver}" /usr/bin/podman
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" && cp "${SOURCE_DIR}/${pkgname}/bin/${pkgname}-${pkgver}" "/usr/bin/podman"
 
     echo "podman installed you can use her with podman --help "
 
 	
 }
+
+
 kraken_build() {
 	
-	
+	echo "nothing todo "
 }
 
 kraken_test() {
