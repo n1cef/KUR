@@ -1,28 +1,34 @@
-pkgname=ansible
-pkgver=11.4.0
+
+pkgname=awscli
+pkgver=exe-linux-x86_64
 
 dependencies=(
-    'python3',
-    'setuptools'
 	
 	
 )
 sources=(
-	"https://files.pythonhosted.org/packages/f1/e3/0cca4bd57b2c5c39d403d369182080c5eecedeb58df74e39ea4a563ddff5/ansible-11.4.0.tar.gz"
+	"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
 )
 
 md5sums=(
-	'71120b252ddb691c2d4f629fa688159f'
+	'369e47ebfd568d72fa04db37337e0d6a'
 )
 
 
 kraken_prepare() {
 	
-	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" 
 
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" 
+    cd "${SOURCE_DIR}/${pkgname}"
+	unzip "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.zip" 
 
-        echo "preparetion complete"
+
+	cd "${SOURCE_DIR}/${pkgname}/aws"
+
+
+    ./install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli
+
+
+    echo "now you  can use aws --help "
 
 	
 }
@@ -41,10 +47,8 @@ kraken_test() {
 }
 
 kraken_install() {
-	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
-	python3 setup.py  install
-
-     echo "Now you can run  asnsible --version "
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" 
+	
     return 0
 }
 
