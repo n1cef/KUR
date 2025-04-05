@@ -1,0 +1,77 @@
+
+pkgname=kotlin
+pkgver=native-prebuilt-linux-x86_64-2.1.20
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/JetBrains/kotlin/releases/download/v2.1.20/kotlin-native-prebuilt-linux-x86_64-2.1.20.tar.gz"
+)
+
+md5sums=(
+	'9317b1b703afd5c36165ae92c1b76c69'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+     
+	cp -r  "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" /usr/
+	mv  "/usr/${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" /usr/kotlin 
+   
+    echo 'PATH="/usr/kotlin/bin:$PATH"' >> /etc/profile
+
+	source /etc/profile
+	source /etc/profile
+
+	echo "kotlin is installed you can konanc -help \ "
+
+
+	
+}
+kraken_build() {
+	return
+	
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	  
+    return 0
+}
+
+kraken_install() {
+	
+    return 0
+}
+
+kraken_preinstall() {
+	
+	return 0
+}
+
+kraken_postinstall() {
+	
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:

@@ -1,0 +1,70 @@
+
+pkgname=podman-remote
+pkgver=static-linux_amd64
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://github.com/containers/podman/releases/download/v5.4.2/podman-remote-static-linux_amd64.tar.gz"
+)
+
+md5sums=(
+	'7386369cd7fc086074cb51041453a2cd'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cp "${SOURCE_DIR}/${pkgname}/bin/${pkgname}-${pkgver}" /usr/bin/podman
+
+    echo "podman installed you can use her with podman --help "
+
+	
+}
+kraken_build() {
+	
+	
+}
+
+kraken_test() {
+	
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	
+    return 0
+}
+
+kraken_preinstall() {
+	
+	return 0
+}
+
+kraken_postinstall() {
+	
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
