@@ -1,0 +1,74 @@
+
+pkgname=ansible
+pkgver=11.4.0
+
+dependencies=(
+    'python3',
+    'setuptools'
+	
+	
+)
+sources=(
+	"https://files.pythonhosted.org/packages/f1/e3/0cca4bd57b2c5c39d403d369182080c5eecedeb58df74e39ea4a563ddff5/ansible-11.4.0.tar.gz"
+)
+
+md5sums=(
+	'71120b252ddb691c2d4f629fa688159f'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}.tar.gz" -C "${SOURCE_DIR}/${pkgname}" &&
+
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&   echo "preparetion complete "
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	 python3 setup.py  install
+
+     echo "Now you can run  asnsible --version "
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
