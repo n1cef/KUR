@@ -1,0 +1,76 @@
+
+pkgname=terraform
+pkgver=1.11.3_linux_amd64
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://releases.hashicorp.com/terraform/1.11.3/terraform_1.11.3_linux_amd64.zip"
+)
+
+md5sums=(
+	'1dfb5d4c4ec5c2052cf67c4be76450d1'
+)
+
+
+kraken_prepare() {
+	
+   cd "${SOURCE_DIR}/${pkgname}" &&
+	unzip "${SOURCE_DIR}/${pkgname}/${pkgname}_${pkgver}.zip"
+     
+     sleep 2 
+     chmod +x "${SOURCE_DIR}/${pkgname}/terraform"
+
+	cp "${SOURCE_DIR}/${pkgname}/terraform" "/usr/local/bin/"
+
+    echo "you can use terraform with terraform --help "
+
+	
+}
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" 
+	
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	
+	echo "$pkgname does not come with a test suite nothing to do !"  
+    return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" 
+	
+    return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+	echo "nothing to do !"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/${pkgname}-${pkgver}" &&
+   
+	return 0 
+}
+
+kraken_preremove() {
+	return
+}
+
+kraken_remove() {
+	
+ 	rm -Rf /use/local/bin/terraform
+	return 
+}
+
+kraken_postremove() {
+	return
+}
+
+# vim:set ts=4 syntax=sh:
