@@ -20,79 +20,49 @@ kraken_prepare() {
 	
 
 	cd "${SOURCE_DIR}/${pkgname}"
-    cat < krakeninstall.sh >> 'EOF'
-
-
+    cat > krakeninstall.sh << 'EOF'  
 #!/bin/bash
+set -e  # Exit on error
 
+echo "Installing kubectl in Kraken OS"
+sleep 1
 
-echo "install kubectl in kraken os "
+echo "Creating source directory..."
+sleep 1
 
-sleep 1 
+mkdir -pv /sources/kubectl
+cd /sources/kubectl || exit 1
 
-echo "create source directory ..."
-sleep 1 
+echo "Downloading the latest release"
+sleep 2
+curl -fLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
+echo "Downloading the kubectl checksum file"
+sleep 2
+curl -fLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 
-
-#mkdir  -pv /sources/kubectl
-cd /sources/kubectl
-
-
-echo "Download the latest release"
-
-sleep 2 
-  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-
- echo "Download the kubectl checksum file"
-
-
-
-   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-   sleep 2 
-
-
-echo "Validate the kubectl binary against the checksum file"
-
+echo "Validating kubectl binary"
 echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 
-
-
-sleep 2 
-
-
-echo "If valid, the output is: "
-
-
+sleep 2
+echo "If valid, the output is:"
 echo "kubectl: OK"
 
-echo "Install kubectl"
-
-
+echo "Installing kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-
-sleep 2 echo "Test to ensure the version you installed is up-to-date:"
-
-
-echo "run kubectl version --client"
-
+sleep 2
+echo "Testing installation:"
+echo "kubectl version --client"
 
 exit 0
-
-
-
-
-
-
-    EOF
+EOF  
 
 
 
     chmod +x krakeninstall.sh
 
-    /krakeninstall.sh
+    ./krakeninstall.sh
 
     sleep 2 
 
