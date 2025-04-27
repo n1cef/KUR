@@ -68,7 +68,7 @@ kraken_test() {
 }
 
 kraken_install() {
-	cd "${SOURCE_DIR}/vscode/
+	cd "${SOURCE_DIR}/vscode/"
     
 
     
