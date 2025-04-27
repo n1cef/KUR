@@ -1,21 +1,21 @@
 format: 1.2
-last_updated: '2025-04-19T14:52:45Z'
+last_updated: 2025-04-27T16:12:11Z
 packages:
   grep:
     category: core
-    version: '3.11'
+    version: "3.11"
     path: pkgbuilds/core/grep/pkgbuild.kraken
     dependencies: []
     checksum: sha256:50d06f5a2b25dccc1d968b59dc7debc2f505f1149143367959be1a7c62e26140
   coreutils:
     category: core
-    version: '9.6'
+    version: "9.6"
     path: pkgbuilds/core/coreutils/pkgbuild.kraken
     dependencies: []
     checksum: sha256:9b645c34a39399962de4eab3ae848be00bc0489c33c9e209f631b97bfb58a785
   gdbm:
     category: core
-    version: '1.24'
+    version: "1.24"
     path: pkgbuilds/core/gdbm/pkgbuild.kraken
     dependencies: []
     checksum: sha256:8edda86eb6f8e1f31d634799eb001c1fe149fb21a1039c01450c34b03402e253
@@ -27,7 +27,7 @@ packages:
     checksum: sha256:32ecbbf7be7b4ecf336a996f7149383e185789da0cb7c63b294fd101674517b6
   ncurses:
     category: core
-    version: '6.5'
+    version: "6.5"
     path: pkgbuilds/core/ncurses/pkgbuild.kraken
     dependencies: []
     checksum: sha256:63872cd83c396b5c623cdd6807317830467431d1b8f059dd8b0dd269f5d6b99b
@@ -45,13 +45,13 @@ packages:
     checksum: sha256:8e052dd50749216b2850baf38f7246d2edcca55237e052a2550787233ee6f780
   less:
     category: core
-    version: '668'
+    version: "668"
     path: pkgbuilds/core/less/pkgbuild.kraken
     dependencies: []
     checksum: sha256:0be4d180273c37fe2338b33f5d07577d1bdee48297af33afacc26cc688954325
   libcap:
     category: core
-    version: '2.73'
+    version: "2.73"
     path: pkgbuilds/core/libcap/pkgbuild.kraken
     dependencies: []
     checksum: sha256:36bea093b18e611202e4c0fb0660c5ec1757d666cb04e442005d34422ae02ca9
@@ -63,7 +63,7 @@ packages:
     checksum: sha256:cd3e47fa481d777d358b23a2ef8110eefbb6f76ec5e4f8b60d0df10d6d1e0457
   man-pages:
     category: core
-    version: '6.12'
+    version: "6.12"
     path: pkgbuilds/core/man-pages/pkgbuild.kraken
     dependencies: []
     checksum: sha256:4b206d63a2b5e0b711fb1db353dd3d36bf421d5a249de6f5e6c880542128592c
@@ -93,7 +93,7 @@ packages:
     checksum: sha256:9bf4ded6c494326dad23a27bd8fc52ce6e7ffb6874f7323093bb4fdcd69faa5f
   autoconf:
     category: core
-    version: '2.72'
+    version: "2.72"
     path: pkgbuilds/core/autoconf/pkgbuild.kraken
     dependencies: []
     checksum: sha256:2cd2b43ccc4ea8a62ddf62167cf77bd3d9e0e6e7629f84ffc67799f7f582fd0c
@@ -105,7 +105,7 @@ packages:
     checksum: sha256:d98b746fdaf8ab9ee17ceec466cbd8ac6e0a45d702136a9768bedb9fd1c880b7
   gettext:
     category: core
-    version: '0.24'
+    version: "0.24"
     path: pkgbuilds/core/gettext/pkgbuild.kraken
     dependencies: []
     checksum: sha256:ab2fcc08310a75412a803f88dc954d662cfb3dc8c70c2756379a9971fb2fb337
@@ -129,7 +129,7 @@ packages:
     checksum: sha256:fb575a5abc9218ee1d86cb847393e41e7be2df8f51e437df0f8ee989bb0a91ed
   sed:
     category: core
-    version: '4.9'
+    version: "4.9"
     path: pkgbuilds/core/sed/pkgbuild.kraken
     dependencies: []
     checksum: sha256:d1367bedafb9558fb97c5fe01688c908042a46d92e0d99519810f510e09b0796
@@ -159,7 +159,7 @@ packages:
     checksum: sha256:f52978679f8cfffbf54a9f531a787a26fd2c45399393ce08358458fb6e94f71a
   glibc:
     category: core
-    version: '2.41'
+    version: "2.41"
     path: pkgbuilds/core/glibc/pkgbuild.kraken
     dependencies: []
     checksum: sha256:af6ced9e4a17f1395d55002d0065a3cb9f810c040bffaba3e73c9d04b21e909c
@@ -177,7 +177,7 @@ packages:
     checksum: sha256:2c67e72f53cb37c4b1253674b5c70850967a87314aabfda2b23280c1575802c1
   kmod:
     category: core
-    version: '34'
+    version: "34"
     path: pkgbuilds/core/kmod/pkgbuild.kraken
     dependencies: []
     checksum: sha256:bdb9f54a1ad365d9dc1b0b4edfabbfa95f9daad54c7103cd3322e74aa60b1dff
@@ -195,19 +195,19 @@ packages:
     checksum: sha256:8815073b939230539d6bf4cd6198d8b06b835707cb01c1429a66cf3afec52b19
   udev:
     category: core
-    version: '257.3'
+    version: "257.3"
     path: pkgbuilds/core/udev/pkgbuild.kraken
     dependencies: []
     checksum: sha256:30c72e34049073f026002804f7f63142e729e1902fc014dd4c147bb165df66d5
   diffutils:
     category: core
-    version: '3.11'
+    version: "3.11"
     path: pkgbuilds/core/diffutils/pkgbuild.kraken
     dependencies: []
     checksum: sha256:83f7be04b9e61a76cfe5e7fe42d92f70e101e038fc95cdf7bde67691f8fee523
   xml-parser:
     category: core
-    version: '2.47'
+    version: "2.47"
     path: pkgbuilds/core/xml-parser/pkgbuild.kraken
     dependencies: []
     checksum: sha256:7b5b55ae5432b04e192a8b29bde777359e8fbbebdcfad801df2854a5b0b3db07
@@ -219,7 +219,7 @@ packages:
     checksum: sha256:ba6e4f4a5f6da8c38e8ca5101143003461f40549725a7a2415585f782e806813
   texinfo:
     category: core
-    version: '7.2'
+    version: "7.2"
     path: pkgbuilds/core/texinfo/pkgbuild.kraken
     dependencies: []
     checksum: sha256:d2de1a408b424669f4f46e08c53799ffe47cc684ec3ca54f978f6a40bca89679
@@ -231,7 +231,7 @@ packages:
     checksum: sha256:c435ad76747ed604c22e12f4472eab36368a413b1d717f2542a7ee868f9216e5
   sysvinit:
     category: core
-    version: '3.14'
+    version: "3.14"
     path: pkgbuilds/core/sysvinit/pkgbuild.kraken
     dependencies: []
     checksum: sha256:df97f939337ce5e77cbdde65b08b0eb7892fc80127a930b1d5c2a31ed3ebade1
@@ -243,7 +243,7 @@ packages:
     checksum: sha256:435bec41c7f0789380b70265aa59e56ff18f0fa702da6c12e2333356aa49b88d
   file:
     category: core
-    version: '5.46'
+    version: "5.46"
     path: pkgbuilds/core/file/pkgbuild.kraken
     dependencies: []
     checksum: sha256:4b1a7ff43df84dea0de1b64db1464637b92678dd8ff4a01d9964241d0618b874
@@ -273,7 +273,7 @@ packages:
     checksum: sha256:082412efc38e31e257847554946afcc31f083ae4458dad1dfa2ab6e47bd8b126
   gzip:
     category: core
-    version: '1.13'
+    version: "1.13"
     path: pkgbuilds/core/gzip/pkgbuild.kraken
     dependencies: []
     checksum: sha256:f8f7ff8d6dc9bccd43532c20ba625f42e2f5a20031c9204a6ea1210433d25e78
@@ -372,13 +372,13 @@ packages:
     checksum: sha256:632a91600ea825f28127b36eebe355cdb8fd25c2a65e0b6c6bde1448b71018e3
   grub:
     category: core
-    version: '2.12'
+    version: "2.12"
     path: pkgbuilds/core/grub/pkgbuild.kraken
     dependencies: []
     checksum: sha256:91a8ef0429b4603631dab3bb32b65368ff86fa6afb0b3a87acc4eefccc95bb07
   gperf:
     category: core
-    version: '3.1'
+    version: "3.1"
     path: pkgbuilds/core/gperf/pkgbuild.kraken
     dependencies: []
     checksum: sha256:8035e2788d2fb98492d29aeeea6b6cb1aca240540ad9b0ce337782905f5143e0
@@ -390,7 +390,7 @@ packages:
     checksum: sha256:659b0eee474ac2110446e7e8e5dd4277606113b304ef60b5f0731d72627fcef5
   binutils:
     category: core
-    version: '2.44'
+    version: "2.44"
     path: pkgbuilds/core/binutils/pkgbuild.kraken
     dependencies: []
     checksum: sha256:4c3727423cb2b0f08b86594b10011d1102189485dff9e2eda8f3900eac66d863
@@ -408,31 +408,31 @@ packages:
     checksum: sha256:816ee86d6c0f6858080daa201a6966af8dd05d96db92a91ea2f17f1fff2f4a0a
   inetutils:
     category: core
-    version: '2.6'
+    version: "2.6"
     path: pkgbuilds/core/inetutils/pkgbuild.kraken
     dependencies: []
     checksum: sha256:703661cab41def0188ea0dcf8cf8b571f34b25b3c7e8dcc200d109e7b80a8315
   libelf:
     category: core
-    version: '0.192'
+    version: "0.192"
     path: pkgbuilds/core/libelf/pkgbuild.kraken
     dependencies: []
     checksum: sha256:803bedd4b6a112d2f14ccb2f05d5580eaf6f479bceb4069823d585f066dbe1b4
   tar:
     category: core
-    version: '1.35'
+    version: "1.35"
     path: pkgbuilds/core/tar/pkgbuild.kraken
     dependencies: []
     checksum: sha256:4635ae3790ceaa9664a81073d0422e6b7096f81f8c4aa3026fc20083c52ce64f
   automake:
     category: core
-    version: '1.17'
+    version: "1.17"
     path: pkgbuilds/core/automake/pkgbuild.kraken
     dependencies: []
     checksum: sha256:1bcde26474f515cccca0ec2db58d0679c4e9f5f22af4ec64b4c9475d34cfc8ba
   postgresql:
     category: sc
-    version: '16.4'
+    version: "16.4"
     path: pkgbuilds/sc/postgresql/pkgbuild.kraken
     dependencies: []
     checksum: sha256:5f7d48910c0ff319acc8444ec55e7b5f85329d1d87f4156c870554d11a62f8da
@@ -475,7 +475,7 @@ packages:
     checksum: sha256:21e5a50a9a67ee4c10bd1db54df88cd7b97225b662dfe6233245482a1c921b6a
   go:
     category: sc
-    version: '22.4'
+    version: "22.4"
     path: pkgbuilds/sc/go/pkgbuild.kraken
     dependencies: []
     checksum: sha256:575832482a257b8aeab134e3e99955878c1d65934173e9de763339bf722d050c
@@ -493,7 +493,7 @@ packages:
     checksum: sha256:535a870f905c8b0fa93709ece9c1e78cf2a38ceb7e1ddcae655af7073cf1ec2a
   strace:
     category: extends
-    version: '6.8'
+    version: "6.8"
     path: pkgbuilds/extends/strace/pkgbuild.kraken
     dependencies: []
     checksum: sha256:cbf18a867e9df0b86b7414b823506bceaa43a44ddb686d02eeb639f1c33b3ce9
@@ -505,14 +505,14 @@ packages:
     checksum: sha256:8a85f83b964d47149359671f06a152db7526a8f80fbc6b8c017e7c406a032c47
   emacs:
     category: extends
-    version: '29.4'
+    version: "29.4"
     path: pkgbuilds/extends/emacs/pkgbuild.kraken
     dependencies:
       - giflib
     checksum: sha256:e4bd7490ed33712a1020a74f641aa256fbec0fa59479f5d8d496ee8837e1a500
   icu:
     category: extends
-    version: '75.1'
+    version: "75.1"
     path: pkgbuilds/extends/icu/pkgbuild.kraken
     dependencies: []
     checksum: sha256:202834435697eea1ec39e6316dc3c021ec7168500351596360f8ae34e7da6d4c
@@ -525,13 +525,13 @@ packages:
     checksum: sha256:f4dd2b01a2ce0bb4b2e54c3b370ed36d9dd01613a581cb67c34644a1b8a1655b
   vscode:
     category: extends
-    version: '1741787903'
+    version: "1741787903"
     path: pkgbuilds/extends/vscode/pkgbuild.kraken
     dependencies: []
     checksum: sha256:c1e7d140acc4abcb7613ce3475b823525451255ec92ac3b0ea211ee6e23de456
   psmisc:
     category: extends
-    version: '23.7'
+    version: "23.7"
     path: pkgbuilds/extends/psmisc/pkgbuild.kraken
     dependencies: []
     checksum: sha256:da06cd4a130e99899c53b39f8d207249bdcc0678590cb527827966b8c7dc9594
@@ -587,13 +587,13 @@ packages:
     checksum: sha256:ac184e1c3183e2f6eeaaf882ee14d7c12bdb164a480e31c9043926c469ecfb61
   fakeroot:
     category: extends
-    version: '1.36'
+    version: "1.36"
     path: pkgbuilds/extends/fakeroot/pkgbuild.kraken
     dependencies: []
     checksum: sha256:9dbb88d0b9cbfb40d72dd5cde5478ade7bcc79aae6fe13908d556b8ab938eb86
   which:
     category: extends
-    version: '2.21'
+    version: "2.21"
     path: pkgbuilds/extends/which/pkgbuild.kraken
     dependencies: []
     checksum: sha256:c611cf5d03179186044066b310b6995133af1bd87c1afa37bdf445a0fdc472bf
@@ -655,7 +655,7 @@ packages:
     checksum: sha256:fc808c6c5d61c1c41d392772c79302f4d204ad509e1a2829f65af25b94a46717
   pcre2:
     category: extends
-    version: '10.44'
+    version: "10.44"
     path: pkgbuilds/extends/pcre2/pkgbuild.kraken
     dependencies: []
     checksum: sha256:fd97f6bf616eb5eb58b9d7d4f29d8ff593926c58e85ad9c0932c7d3707efad2d
@@ -687,13 +687,13 @@ packages:
     checksum: sha256:9942e5bb5e3bf78788d11ee39852a5d1fa5bdf9b8e6386e9c441250d2ebcb552
   nano:
     category: extends
-    version: '8.3'
+    version: "8.3"
     path: pkgbuilds/extends/nano/pkgbuild.kraken
     dependencies: []
-    checksum: sha256:147667bbee3151d69904550af95680ef38feadd2b495e072b41d94c8771b5685
+    checksum: sha256:807a01b45173abc6b4ecb897e20dfc7f37d237cc8f4bd14d3be060c55e23b69f
   joe:
     category: extends
-    version: '4.6'
+    version: "4.6"
     path: pkgbuilds/extends/joe/pkgbuild.kraken
     dependencies:
       - nano
@@ -732,19 +732,19 @@ packages:
     checksum: sha256:e999056eaaffad044376a34f17d3393cf3db3dd8d9b650f992c92d60a3f1c25d
   gettext-add-tmp-tool:
     category: temp-tools
-    version: '0.24'
+    version: "0.24"
     path: pkgbuilds/temp-tools/gettext-add-tmp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:3973eaecee77e67cba341b59afc6f5160c9b328508a1f7d516c4abcde93af4c2
   gzip-temp-tool:
     category: temp-tools
-    version: '1.13'
+    version: "1.13"
     path: pkgbuilds/temp-tools/gzip-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:07d2cc1c294ba0fbf2625ac8db6f8bc82d2afad46521321b5301de9c7eb64fab
   ncurses-temp-tool:
     category: temp-tools
-    version: '6.5'
+    version: "6.5"
     path: pkgbuilds/temp-tools/ncurses-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:4114c621f1388d338966f41aa3d79ff50567de08f654d9f005b8626548b57fe7
@@ -756,7 +756,7 @@ packages:
     checksum: sha256:bda5aeb744358ac0435330293cbe49973ed0648222ace4c12b6f40967fc6ff7c
   coreutils-temp-tool:
     category: temp-tools
-    version: '9.6'
+    version: "9.6"
     path: pkgbuilds/temp-tools/coreutils-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:f7c542ea6dd81640aa4faf9acd50769f6ea755b3415b9ebe3a79699a84cb29ed
@@ -774,31 +774,31 @@ packages:
     checksum: sha256:c9752c86a72930f47c0f085b0e250a1c5c4416b3a262a5ef1662b747964fab98
   texinfo-add-tmp-tool:
     category: temp-tools
-    version: '7.2'
+    version: "7.2"
     path: pkgbuilds/temp-tools/texinfo-add-tmp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:db056914a11b69ea9fc1503e0454ebca22491d93b718986617e14a1c857f37fc
   libstdc++-corss-toolchain:
     category: temp-tools
-    version: '8.3'
+    version: "8.3"
     path: pkgbuilds/temp-tools/libstdc++-corss-toolchain/pkgbuild.kraken
     dependencies: []
     checksum: sha256:06f5c6361a10765dd84cee6dd6d14fb6e3582ddc7987cf46ae0646683cb5763a
   grep-temp-tool:
     category: temp-tools
-    version: '3.11'
+    version: "3.11"
     path: pkgbuilds/temp-tools/grep-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:74a8189bef5d657928ddd5edf416562411af5e1fe15a6a38bd6d4744987e0aad
   sed-temp-tool:
     category: temp-tools
-    version: '4.9'
+    version: "4.9"
     path: pkgbuilds/temp-tools/sed-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:b731b2ed45660b2d81cdd1e98ab2ccf380de247d029672e3c77820ca0326982b
   tar-temp-tool:
     category: temp-tools
-    version: '1.35'
+    version: "1.35"
     path: pkgbuilds/temp-tools/tar-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:783992739366020adfc47ca177b766dcaa55b72381963ae5e956ba11cb919d67
@@ -834,7 +834,7 @@ packages:
     checksum: sha256:783343e1873fb627b92812c3ebb853f664886c50f84853b5f4cff8976235477c
   file-temp-tool:
     category: temp-tools
-    version: '5.46'
+    version: "5.46"
     path: pkgbuilds/temp-tools/file-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:821e433988e49a9bebda6a0970005a842b9eefa97c3bf955b2777037977d91e2
@@ -846,7 +846,7 @@ packages:
     checksum: sha256:dc8b9de77c2c771a0c946bc9f549d180cc68adf6564aee3a1cea9f2ea36688e9
   diffutils-temp-tool:
     category: temp-tools
-    version: '3.11'
+    version: "3.11"
     path: pkgbuilds/temp-tools/diffutils-temp-tool/pkgbuild.kraken
     dependencies: []
     checksum: sha256:549c9f8714051257308500a2d06c88ffccd3195d7c5d493594dc2d299c8b6c00
@@ -864,7 +864,7 @@ packages:
     checksum: sha256:7ef46a4b33cf16dda92078fc48d9b75aaeb4cd3f4ee18ead7a7e6ebaaf413993
   binutils-pass1:
     category: temp-tools
-    version: '2.44'
+    version: "2.44"
     path: pkgbuilds/temp-tools/binutils-pass1/pkgbuild.kraken
     dependencies: []
     checksum: sha256:7dfb83baa868aa0e3a07131248c910035b5b89781880ed898af0e693adec49d8
@@ -888,7 +888,7 @@ packages:
     checksum: sha256:99df3588d0442ea7b0ae685937328cae938915f037b0db5aec5bd67a3281a93d
   glibc-cross-toolchain:
     category: temp-tools
-    version: '2.41'
+    version: "2.41"
     path: pkgbuilds/temp-tools/glibc-cross-toolchain/pkgbuild.kraken
     dependencies: []
     checksum: sha256:a867efffc9ad54e7b3690d1c7c178355c35417b75b9bda63f96de0be62b9f7cc
