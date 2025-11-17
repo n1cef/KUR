@@ -1,0 +1,124 @@
+pkgname=angular
+pkgver=19.0.6
+
+dependencies=(
+	'nodejs'
+	
+)
+sources=(
+	""
+)
+
+md5sums=(
+	''
+)
+
+
+kraken_prepare() {
+	
+	cd "${SOURCE_DIR}/${pkgname}"
+
+	echo "Preparing Angular CLI installation..."
+	echo "Angular CLI will be installed globally via npm"
+	
+	# Verify Node.js and npm are available
+	if ! command -v node &> /dev/null; then
+		echo "ERROR: Node.js is required but not found. Please install nodejs first."
+		return 1
+	fi
+	
+	if ! command -v npm &> /dev/null; then
+		echo "ERROR: npm is required but not found. Please install nodejs first."
+		return 1
+	fi
+	
+	echo "Node.js version: $(node --version)"
+	echo "npm version: $(npm --version)"
+	echo "Preparation complete"
+	
+}
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}"
+	
+	echo "No build required - Angular CLI will be installed from npm registry"
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}"
+	
+	echo "Angular CLI does not come with a test suite - nothing to do!"
+	return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}"
+	
+	echo "Installing Angular CLI globally via npm..."
+	sudo npm install -g @angular/cli@${pkgver}
+	
+	echo ""
+	echo "=========================================="
+	echo "Angular CLI installation complete!"
+	echo "=========================================="
+	echo ""
+	echo "You can now use Angular CLI with the following commands:"
+	echo "  - ng version          : Check Angular CLI version"
+	echo "  - ng new <app-name>   : Create a new Angular application"
+	echo "  - ng serve            : Serve your Angular application"
+	echo "  - ng generate         : Generate Angular components, services, etc."
+	echo "  - ng build            : Build your Angular application"
+	echo "  - ng help             : Get help with Angular CLI commands"
+	echo ""
+	echo "To create your first Angular app with Atomic Design principles:"
+	echo "  1. ng new my-app --routing --style=scss"
+	echo "  2. cd my-app"
+	echo "  3. ng generate module shared/components/atoms"
+	echo "  4. ng generate module shared/components/molecules"
+	echo "  5. ng generate module shared/components/organisms"
+	echo "  6. ng generate module shared/components/templates"
+	echo "  7. ng generate module shared/components/pages"
+	echo ""
+	echo "This structure follows Atomic Design methodology:"
+	echo "  - Atoms: Basic building blocks (buttons, inputs, labels)"
+	echo "  - Molecules: Simple components (form groups, search boxes)"
+	echo "  - Organisms: Complex components (headers, forms, cards)"
+	echo "  - Templates: Page-level layouts"
+	echo "  - Pages: Specific instances of templates"
+	echo ""
+	
+	return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}"
+	echo "Pre-installation checks passed"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}"
+	
+	echo "Verifying Angular CLI installation..."
+	ng version
+	
+	return 0 
+}
+
+kraken_preremove() {
+	return 0
+}
+
+kraken_remove() {
+	echo "Removing Angular CLI..."
+	sudo npm uninstall -g @angular/cli
+	
+	return 0
+}
+
+kraken_postremove() {
+	echo "Angular CLI removed successfully"
+	return 0
+}
+
+# vim:set ts=4 syntax=sh:

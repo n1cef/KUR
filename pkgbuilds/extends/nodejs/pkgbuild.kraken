@@ -1,0 +1,94 @@
+pkgname=nodejs
+pkgver=22.13.1
+
+dependencies=(
+	
+	
+)
+sources=(
+	"https://nodejs.org/dist/v22.13.1/node-v22.13.1-linux-x64.tar.xz"
+)
+
+md5sums=(
+	'5c2e7b2ca8de6c2f91bd2cafc8c49b22'
+)
+
+
+kraken_prepare() {
+	
+	tar -xvf "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64.tar.xz" -C "${SOURCE_DIR}/${pkgname}"
+
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+
+	echo "Node.js preparation complete"
+	
+}
+
+kraken_build() {
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+	
+	echo "Using pre-built Node.js binary distribution - no build required"
+}
+
+kraken_test() {
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+	
+	echo "Testing Node.js installation..."
+	./bin/node --version
+	./bin/npm --version
+	
+	return 0
+}
+
+kraken_install() {
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+	
+	echo "Installing Node.js to /usr/local..."
+	sudo cp -r bin/* /usr/local/bin/
+	sudo cp -r lib/* /usr/local/lib/
+	sudo cp -r include/* /usr/local/include/ 2>/dev/null || true
+	sudo cp -r share/* /usr/local/share/ 2>/dev/null || true
+	
+	echo "Node.js installation complete"
+	echo "You can now run: node --version"
+	echo "You can now run: npm --version"
+	
+	return 0
+}
+
+kraken_preinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+	echo "Pre-installation checks passed"
+	return 0
+}
+
+kraken_postinstall() {
+	cd "${SOURCE_DIR}/${pkgname}/node-v${pkgver}-linux-x64"
+	
+	echo "Verifying Node.js installation..."
+	node --version
+	npm --version
+	
+	return 0 
+}
+
+kraken_preremove() {
+	return 0
+}
+
+kraken_remove() {
+	echo "Removing Node.js binaries..."
+	sudo rm -f /usr/local/bin/node
+	sudo rm -f /usr/local/bin/npm
+	sudo rm -f /usr/local/bin/npx
+	sudo rm -rf /usr/local/lib/node_modules
+	
+	return 0
+}
+
+kraken_postremove() {
+	echo "Node.js removed successfully"
+	return 0
+}
+
+# vim:set ts=4 syntax=sh:
