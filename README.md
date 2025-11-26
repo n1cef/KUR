@@ -142,3 +142,7 @@ kraken_postremove() { return 0; }
 
 ##  📂 Related Projects
    <h3> [Kraken Package Manager](https://github.com/n1cef/kraken_package_manager) </h3>
+
+## 📚 Additional Guides
+
+- **[Python OpenCV Installation Guide for Windows 11](PYTHON_OPENCV_WINDOWS11_GUIDE.md)** - Step-by-step instructions for installing Python and OpenCV on Windows 11 using virtual environments
