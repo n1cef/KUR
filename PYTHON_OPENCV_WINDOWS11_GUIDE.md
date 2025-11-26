@@ -13,7 +13,8 @@ Before starting, ensure you have:
 
 1. **Download Python:**
    - Visit the official Python website: https://www.python.org/downloads/
-   - Download the latest Python 3.x installer for Windows (Python 3.11 or later recommended)
+   - Download Python 3.11.x or 3.12.x installer for Windows (these versions have proven compatibility with OpenCV)
+   - **Note:** While newer versions may work, it's recommended to use Python 3.11 or 3.12 for best compatibility
 
 2. **Install Python:**
    - Run the downloaded installer
@@ -213,8 +214,9 @@ Whenever you want to work on your OpenCV project:
   1. Search for "Environment Variables" in Windows
   2. Click "Environment Variables"
   3. Under "System variables", find "Path" and click "Edit"
-  4. Click "New" and add: `C:\Users\YourUsername\AppData\Local\Programs\Python\Python3xx`
-  5. Click "OK" and restart Command Prompt
+  4. Click "New" and add the path where Python is installed (e.g., `C:\Users\YourUsername\AppData\Local\Programs\Python\Python311`)
+  5. Also add the Scripts folder: `C:\Users\YourUsername\AppData\Local\Programs\Python\Python311\Scripts`
+  6. Click "OK" and restart Command Prompt
 
 ### Issue 2: "pip is not recognized as an internal or external command"
 
@@ -249,7 +251,8 @@ Whenever you want to work on your OpenCV project:
 
 **Solution:**
 - Install Microsoft Visual C++ Redistributable:
-  - Download from: https://aka.ms/vs/17/release/vc_redist.x64.exe
+  - Visit the official Microsoft Visual C++ Redistributable page: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
+  - Download the latest x64 version (vc_redist.x64.exe)
   - Install and restart your computer
 
 ## 📚 Additional Packages (Optional)
